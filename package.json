@@ -12,7 +12,10 @@
     "name": "zohoapis"
   },
   "keywords": [
-    "typescript"
+    "zoho",
+    "api",
+    "node",
+    "crm"
   ],
   "publishConfig": {
     "access": "public"

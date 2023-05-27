@@ -1,10 +1,19 @@
+import { modulesModule } from "./modules";
+import { organizationModule } from "./organization";
 import { recordsModule } from "./records";
 import { relatedRecordsModule } from "./relatedRecords";
+import { usersModule } from "./users";
 
-export const Records = recordsModule;
-export const RelatedRecords = relatedRecordsModule;
+export const modules = modulesModule;
+export const organization = organizationModule;
+export const records = recordsModule;
+export const relatedRecords = relatedRecordsModule;
+export const users = usersModule;
 
 export default {
-  Records,
-  RelatedRecords,
+  modules,
+  organization,
+  records,
+  relatedRecords,
+  users,
 };
