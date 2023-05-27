@@ -72,6 +72,7 @@ export module recordsModule {
 
     let url = `${baseUrl}/${module}${recordId ? `/${recordId}` : ""}`;
 
+    console.log("authToken:", authToken);
     console.log("recordId:", recordId);
     console.log("params:", params);
     if (params) {

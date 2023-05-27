@@ -1,15 +1,15 @@
 import { describe, it, expect } from "vitest";
-import { RelatedRecords } from "~/index";
+import { relatedRecords } from "~/index";
 
-RelatedRecords.authToken =
+relatedRecords.authToken =
   "1000.e9ff05ca217bfe383ad604d703b35b67.456cf1c9f242e159890178f4c6425bc8";
 
 describe("Records", () => {
-  RelatedRecords.version = "v4";
+  relatedRecords.version = "v4";
 
   it("getRelatedRecord", async () => {
     expect(
-      await RelatedRecords.getRelatedRecords(
+      await relatedRecords.getRelatedRecords(
         "Accounts",
         "3746689000002463011",
         "Products",
@@ -20,7 +20,7 @@ describe("Records", () => {
 
   it("udpateRelatedRecord", async () => {
     expect(
-      await RelatedRecords.linkRelatedRecords(
+      await relatedRecords.linkRelatedRecords(
         "Accounts",
         "3746689000002463011",
         "Products",
@@ -29,9 +29,9 @@ describe("Records", () => {
     ).toBeTypeOf("object");
   });
 
-  it("deleteRelatedRecords", async () => {
+  it("deleterelatedRecords", async () => {
     expect(
-      await RelatedRecords.delinkRelatedRecords(
+      await relatedRecords.delinkRelatedRecords(
         "Accounts",
         "3746689000002463011",
         "Products",
