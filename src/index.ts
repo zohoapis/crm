@@ -1,7 +1,10 @@
-import { add } from "./add";
+import { recordsModule } from "./records";
+import { relatedRecordsModule } from "./relatedRecords";
 
-export { add };
+export const Records = recordsModule;
+export const RelatedRecords = relatedRecordsModule;
 
 export default {
-  add,
+  Records,
+  RelatedRecords,
 };
