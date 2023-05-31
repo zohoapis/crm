@@ -1,6 +1,6 @@
 # Zoho API Client
 
-npm version
+![GitHub package.json version](https://img.shields.io/github/package-json/v/zohoapis/crm)
 
 The Zoho API Client is an NPM package that provides a convenient way to interact with Zoho's APIs. It abstracts away the complexities of authentication and API calls, allowing you to focus on integrating Zoho's services into your applications.
 
@@ -45,21 +45,17 @@ Records.getRecords("Accounts", "", { fields: "id" });
 
 ## API Reference
 
-The Zoho API Client provides a set of methods to interact with Zoho's APIs. Refer to the [API reference documentation]() for detailed information about the available methods and their usage.
+The Zoho API Client provides a set of methods to interact with Zoho's APIs. Refer to the [API reference documentation](https://www.zoho.com/crm/developer/docs/api/v4/) for detailed information about the available methods and their usage.
 
 ## Contributing
 
-Contributions are welcome! If you find any issues or want to add new features, please submit a pull request. Make sure to follow the [contribution guidelines]().
+Contributions are welcome! If you find any issues or want to add new features, please submit a pull request. Make sure to follow the contribution guidelines.
 
 ## License
 
-This project is licensed under the [MIT License]().
+This project is licensed under the MIT License.
 
 ## Acknowledgements
 
 - The Zoho API Client package was inspired by the need for a simplified interface to interact with Zoho's APIs.
 - Thanks to the contributors who have helped improve this package.
-
-## Support
-
-If you have any questions, feel free to reach out to our support team at [support@example.com]().
