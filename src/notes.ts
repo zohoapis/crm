@@ -188,17 +188,17 @@ export module notesModule {
    * @param {String} recordId - Record Id
    * @param {GetParams} params - Query Parameters
    */
-  export async function UpdateNotes(notes: NoteUpdate[]): Promise<Object>;
-  export async function UpdateNotes(
+  export async function updateNotes(notes: NoteUpdate[]): Promise<Object>;
+  export async function updateNotes(
     noteId: string,
     note: RecordNoteUpdate
   ): Promise<Object>;
-  export async function UpdateNotes(
+  export async function updateNotes(
     module: string,
     recordId: string,
     note: RecordNotesUpdate[]
   ): Promise<Object>;
-  export async function UpdateNotes(
+  export async function updateNotes(
     a: NoteUpdate[] | string,
     b?: string | RecordNoteUpdate,
     c?: RecordNoteUpdate[] | RecordNotesUpdate[]
@@ -226,6 +226,56 @@ export module notesModule {
       body: JSON.stringify({
         data: notes,
       }),
+    })
+      .then((res) => {
+        console.log(res.status);
+        if (res.status !== 204) {
+          return res.json();
+        } else {
+          return {};
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        return data as Object;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
+
+    return data;
+  }
+
+  export async function deleteNotes(noteId: string): Promise<Object>;
+  export async function deleteNotes(noteIds: string[]): Promise<Object>;
+  export async function deleteNotes(
+    module: string,
+    recordId: string,
+    noteId: string
+  ): Promise<Object>;
+  export async function deleteNotes(
+    a: string | string[],
+    b?: string,
+    c?: string
+  ): Promise<Object> {
+    let url = `${baseUrl}`;
+
+    if (b) {
+      url += `/${a}/${b}/Notes/${c}`;
+    } else if (Array.isArray(a)) {
+      const qs = `?ids=${a.map((id) => id).join(",")}`;
+      url += `/Notes` + qs;
+    } else {
+      url += `/Notes/${a}`;
+    }
+
+    console.log("url:", url);
+    const data = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Zoho-oauthtoken " + authToken,
+      },
     })
       .then((res) => {
         console.log(res.status);
