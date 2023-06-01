@@ -1,7 +1,8 @@
 import fetch from "node-fetch";
 
 export module modulesModule {
-  export let authToken: string;
+  let authToken: string;
+  export let auth: any;
   const apiDomain = "https://www.zohoapis.com";
   export let version: string = "v4";
 
@@ -15,18 +16,29 @@ export module modulesModule {
    *
    */
   export async function getModules(): Promise<Object> {
+    console.log(auth);
     let url = `${baseUrl}/settings/modules`;
 
     console.log("url:", url);
+    console.log("authToken:", auth.authToken);
     const data = await fetch(url, {
       method: "GET",
       headers: {
-        Authorization: "Zoho-oauthtoken " + authToken,
+        Authorization: "Zoho-oauthtoken " + auth.authToken,
       },
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        console.log(res.status);
+        if (res.status === 401) {
+          await auth.refresh();
+          return getModules();
+          //authToken = auth.authToken
+        } else {
+          return res.json();
+        }
+      })
       .then((data) => {
-        console.log(data);
+        //console.log("data", data);
         return data as Object;
       })
       .catch((err) => {
