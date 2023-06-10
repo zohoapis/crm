@@ -8,7 +8,8 @@ type BasicFieldParams = {
 import fetch from "node-fetch";
 
 export module relatedRecordsModule {
-  export let authToken: string;
+  let authToken: string;
+  export let auth: any;
   const apiDomain = "https://www.zohoapis.com";
   export let version: string = "v4";
 
@@ -20,14 +21,14 @@ export module relatedRecordsModule {
    * @description Get's a record from a module
    * https://www.zoho.com/crm/developer/docs/api/v4/get-related-records.html
    *
-   * @param {String} module - Module Name
-   * @param {String} recordId - Record Id
+   * @param {string} module - Module Name
+   * @param {string} recordId - Record Id
    * @param {Object} record - Record to update
    */
   export async function getRelatedRecords(
-    module: String,
-    recordId: String,
-    relatedListName: String,
+    module: string,
+    recordId: string,
+    relatedListName: string,
     params: BasicFieldParams
   ): Promise<Object> {
     let url = `${baseUrl}/${module}/${recordId}/${relatedListName}`;
@@ -67,26 +68,26 @@ export module relatedRecordsModule {
    * @description Get's a record from a module
    * https://www.zoho.com/crm/developer/docs/api/v4/update-related-records.html
    *
-   * @param {String} module - Module Name
-   * @param {String} recordId - Record Id
+   * @param {string} module - Module Name
+   * @param {string} recordId - Record Id
    * @param {Object} record - Record to update
    */
   export async function linkRelatedRecords(
-    module: String,
-    recordId: String,
-    relatedListName: String,
+    module: string,
+    recordId: string,
+    relatedListName: string,
     record: Object
   ): Promise<Object>;
   export async function linkRelatedRecords(
-    module: String,
-    recordId: String,
-    relatedListName: String,
+    module: string,
+    recordId: string,
+    relatedListName: string,
     records: Object[]
   ): Promise<Object>;
   export async function linkRelatedRecords(
-    module: String,
-    recordId: String,
-    relatedListName: String,
+    module: string,
+    recordId: string,
+    relatedListName: string,
     record: Object | Object[]
   ): Promise<Object> {
     let newRecords: Object[] | undefined = undefined;
@@ -128,27 +129,27 @@ export module relatedRecordsModule {
    * @description Get's a record from a module
    * https://www.zoho.com/crm/developer/docs/api/v4/delink.html
    *
-   * @param {String} module - Module Name
-   * @param {String} recordId - Record Id
+   * @param {string} module - Module Name
+   * @param {string} recordId - Record Id
    * @param {Object} record - Record to update
    */
   export async function delinkRelatedRecords(
-    module: String,
-    recordId: String,
-    relatedListName: String,
-    relatedRecordId: String
+    module: string,
+    recordId: string,
+    relatedListName: string,
+    relatedRecordId: string
   ): Promise<Object>;
   export async function delinkRelatedRecords(
-    module: String,
-    recordId: String,
-    relatedListName: String,
-    relatedRecordIds: String[]
+    module: string,
+    recordId: string,
+    relatedListName: string,
+    relatedRecordIds: string[]
   ): Promise<Object>;
   export async function delinkRelatedRecords(
-    module: String,
-    recordId: String,
-    relatedListName: String,
-    relatedRecordId: String | String[]
+    module: string,
+    recordId: string,
+    relatedListName: string,
+    relatedRecordId: string | string[]
   ): Promise<Object> {
     let url = `${baseUrl}/${module}/${recordId}/${relatedListName}`;
 

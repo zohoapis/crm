@@ -23,7 +23,8 @@ type BasicParams = {
 import fetch from "node-fetch";
 
 export module recordsModule {
-  export let authToken: string;
+  let authToken: string;
+  export let auth: any;
   const apiDomain = "https://www.zohoapis.com";
   export let version: string = "v4";
 
@@ -35,30 +36,30 @@ export module recordsModule {
    * @description Get's a record from a module
    * https://www.zoho.com/crm/developer/docs/api/v4/get-records.html
    *
-   * @param {String} module - Module Name
-   * @param {String} recordId - Record Id
+   * @param {string} module - Module Name
+   * @param {string} recordId - Record Id
    * @param {GetParams} params - Query Parameters
    */
-  export async function getRecords(module: String): Promise<Object>;
+  export async function getRecords(module: string): Promise<Object>;
   export async function getRecords(
-    module: String,
-    recordId: String
+    module: string,
+    recordId: string
   ): Promise<Object>;
   export async function getRecords(
-    module: String,
+    module: string,
     params: GetParams
   ): Promise<Object>;
   export async function getRecords(
-    module: String,
-    recordId: String,
+    module: string,
+    recordId: string,
     params: GetParams
   ): Promise<Object>;
   export async function getRecords(
-    module: String,
-    b?: String | GetParams,
+    module: string,
+    b?: string | GetParams,
     c?: GetParams
   ): Promise<Object> {
-    let recordId: String | undefined = undefined;
+    let recordId: string | undefined = undefined;
     let params: GetParams | undefined = undefined;
 
     if (typeof b === "string") {
@@ -110,19 +111,19 @@ export module recordsModule {
    * @description Get's a record from a module
    * https://www.zoho.com/crm/developer/docs/api/v4/insert-records.html
    *
-   * @param {String} module - Module Name
+   * @param {string} module - Module Name
    * @param {Object|Object[]} record - Single record to create / Multiple records to create
    */
   export async function insertRecords(
-    module: String,
+    module: string,
     record: Object
   ): Promise<Object>;
   export async function insertRecords(
-    module: String,
+    module: string,
     records: Object[]
   ): Promise<Object>;
   export async function insertRecords(
-    module: String,
+    module: string,
     b: Object[] | Object
   ): Promise<Object> {
     let newRecords: Object[] | undefined = undefined;
@@ -162,25 +163,25 @@ export module recordsModule {
    * @description Get's a record from a module
    * https://www.zoho.com/crm/developer/docs/api/v4/update-records.html
    *
-   * @param {String} module - Module Name
-   * @param {String} recordId - Record Id
+   * @param {string} module - Module Name
+   * @param {string} recordId - Record Id
    * @param {Object} record - Record to update
    */
   export async function updateRecords(
-    module: String,
+    module: string,
     records: Object[]
   ): Promise<Object>;
   export async function updateRecords(
-    module: String,
-    recordId: String,
+    module: string,
+    recordId: string,
     record: Object
   ): Promise<Object>;
   export async function updateRecords(
-    module: String,
-    b: Object[] | String,
+    module: string,
+    b: Object[] | string,
     c?: Object
   ): Promise<Object> {
-    let recordId: String | undefined = undefined;
+    let recordId: string | undefined = undefined;
     let updateRecords: Object[] | undefined = undefined;
 
     if (typeof b === "string" && c) {
@@ -219,19 +220,19 @@ export module recordsModule {
    * @description Get's a record from a module
    * https://www.zoho.com/crm/developer/docs/api/v4/insert-records.html
    *
-   * @param {String} module - Module Name
+   * @param {string} module - Module Name
    * @param {Object|Object[]} record - Single record to create / Multiple records to create
    */
   export async function upsertRecords(
-    module: String,
+    module: string,
     record: Object
   ): Promise<Object>;
   export async function upsertRecords(
-    module: String,
+    module: string,
     records: Object[]
   ): Promise<Object>;
   export async function upsertRecords(
-    module: String,
+    module: string,
     b: Object[] | Object
   ): Promise<Object> {
     let newRecords: Object[] | undefined = undefined;
@@ -271,8 +272,8 @@ export module recordsModule {
    * @description Get's a record from a module
    * https://www.zoho.com/crm/developer/docs/api/v4/delete-records.html
    *
-   * @param {String} module - Module Name
-   * @param {String} recordId - Record Id
+   * @param {string} module - Module Name
+   * @param {string} recordId - Record Id
    * @param {Object} record - Record to update
    */
   export async function deleteRecords(
@@ -324,7 +325,7 @@ export module recordsModule {
    * @description Get's a list of deleted records from a module
    * https://www.zoho.com/crm/developer/docs/api/v4/get-deleted-records.html
    *
-   * @param {String} module - Module Name
+   * @param {string} module - Module Name
    * @param {ListDeletedParams} params - Query Parameters
    */
   export const getDeleted = async (module: string, params?: BasicParams) => {
@@ -359,24 +360,24 @@ export module recordsModule {
 
   //Search
   export async function searchRecords(
-    module: String,
-    criteria: String[]
+    module: string,
+    criteria: string[]
   ): Promise<Object>;
   export async function searchRecords(
-    module: String,
-    email: String
+    module: string,
+    email: string
   ): Promise<Object>;
   export async function searchRecords(
-    module: String,
-    phone: String
+    module: string,
+    phone: string
   ): Promise<Object>;
   export async function searchRecords(
-    module: String,
-    word: String
+    module: string,
+    word: string
   ): Promise<Object>;
   export async function searchRecords(
-    module: String,
-    a: String | String[]
+    module: string,
+    a: string | string[]
   ): Promise<Object> {
     let url = `${baseUrl}/${module}/search`;
 
@@ -432,24 +433,24 @@ export module recordsModule {
 
   //Record count
   export async function countRecords(
-    module: String,
-    criteria: String[]
+    module: string,
+    criteria: string[]
   ): Promise<Object>;
   export async function countRecords(
-    module: String,
-    email: String
+    module: string,
+    email: string
   ): Promise<Object>;
   export async function countRecords(
-    module: String,
-    phone: String
+    module: string,
+    phone: string
   ): Promise<Object>;
   export async function countRecords(
-    module: String,
-    word: String
+    module: string,
+    word: string
   ): Promise<Object>;
   export async function countRecords(
-    module: String,
-    a: String | String[]
+    module: string,
+    a: string | string[]
   ): Promise<Object> {
     let url = `${baseUrl}/${module}/actions/count`;
 
