@@ -1,6 +1,6 @@
 {
   "name": "@zohoapis/crm",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Library to simplify calling Zoho CRM's APIs.",
   "repository": {
     "type": "git",
@@ -50,6 +50,7 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
+    "@zohoapis/auth": "^0.1.0",
     "node-fetch": "^3.3.1"
   },
   "devDependencies": {
