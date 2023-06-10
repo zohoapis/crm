@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@zohoapis/auth':
+    specifier: ^0.1.0
+    version: 0.1.0
   node-fetch:
     specifier: ^3.3.1
     version: 3.3.1
@@ -371,6 +374,12 @@ packages:
       loupe: 2.3.6
       pretty-format: 27.5.1
     dev: true
+
+  /@zohoapis/auth@0.1.0:
+    resolution: {integrity: sha512-lAgx6haGp4G0vFhjc9TD5JwRfkAoWh0TT7Tv32rkqTb9rmg7MZvHUv0iEpwYzukyNKqdUAqQb2LJed2hXdYLrA==}
+    dependencies:
+      node-fetch: 3.3.1
+    dev: false
 
   /acorn-walk@8.2.0:
     resolution: {integrity: sha512-k+iyHEuPgSw6SbuDpGQM+06HQUa04DZ3o+F6CSzXMvvI5KMvnaEqXe+YVe555R9nn6GPt404fos4wcgpw12SDA==}
