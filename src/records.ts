@@ -355,6 +355,7 @@ export module recordsModule {
       })
       .catch((err) => {
         //console.log(err);
+        return err;
       });
 
     return data;
@@ -427,7 +428,7 @@ export module recordsModule {
         return data as Object;
       })
       .catch((err) => {
-        //console.log(err);
+        console.log(err);
         return err;
       });
     return data;
