@@ -1,6 +1,6 @@
 {
   "name": "@zohoapis/crm",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Library to simplify calling Zoho CRM's APIs.",
   "repository": {
     "type": "git",

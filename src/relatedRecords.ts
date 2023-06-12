@@ -33,8 +33,8 @@ export module relatedRecordsModule {
   ): Promise<Object> {
     let url = `${baseUrl}/${module}/${recordId}/${relatedListName}`;
 
-    console.log("recordId:", recordId);
-    console.log("params:", params);
+    // console.log("recordId:", recordId);
+    // console.log("params:", params);
     const qs =
       "?" +
       Object.keys(params)
@@ -42,20 +42,25 @@ export module relatedRecordsModule {
         .join("&");
     url = url + qs;
 
-    console.log("url:", url);
+    // console.log("url:", url);
     const data = await fetch(url, {
       method: "GET",
       headers: {
         Authorization: "Zoho-oauthtoken " + authToken,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status == 204) {
+          return [];
+        }
+        return res.json();
+      })
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         return data as Object;
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         return err;
       });
 

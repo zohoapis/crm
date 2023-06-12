@@ -73,9 +73,9 @@ export module recordsModule {
 
     let url = `${baseUrl}/${module}${recordId ? `/${recordId}` : ""}`;
 
-    console.log("authToken:", authToken);
-    console.log("recordId:", recordId);
-    console.log("params:", params);
+    //console.log("authToken:", authToken);
+    //console.log("recordId:", recordId);
+    //console.log("params:", params);
     if (params) {
       const qs =
         "?" +
@@ -85,7 +85,7 @@ export module recordsModule {
       url = url + qs;
     }
 
-    console.log("url:", url);
+    //console.log("url:", url);
     const data = await fetch(url, {
       method: "GET",
       headers: {
@@ -94,11 +94,11 @@ export module recordsModule {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         return data as Object;
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         return err;
       });
 
@@ -136,7 +136,7 @@ export module recordsModule {
 
     let url = `${baseUrl}/${module}`;
 
-    console.log("url:", url);
+    //console.log("url:", url);
     const data = await fetch(url, {
       method: "POST",
       headers: {
@@ -146,11 +146,11 @@ export module recordsModule {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         return data as Object;
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         return err;
       });
 
@@ -193,7 +193,7 @@ export module recordsModule {
 
     let url = `${baseUrl}/${module}/${recordId}`;
 
-    console.log("url:", url);
+    //console.log("url:", url);
     const data = await fetch(url, {
       method: "PUT",
       headers: {
@@ -203,11 +203,11 @@ export module recordsModule {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         return data as Object;
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         return err;
       });
 
@@ -245,7 +245,7 @@ export module recordsModule {
 
     let url = `${baseUrl}/${module}/upsert`;
 
-    console.log("url:", url);
+    //console.log("url:", url);
     const data = await fetch(url, {
       method: "POST",
       headers: {
@@ -255,11 +255,11 @@ export module recordsModule {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         return data as Object;
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         return err;
       });
 
@@ -299,7 +299,7 @@ export module recordsModule {
       url = url + `/${recordId}`;
     }
 
-    console.log("url:", url);
+    //console.log("url:", url);
     const data = await fetch(url, {
       method: "DELETE",
       headers: {
@@ -308,11 +308,11 @@ export module recordsModule {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         return data as Object;
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         return err;
       });
 
@@ -339,7 +339,7 @@ export module recordsModule {
       url = url + qs;
     }
 
-    console.log(url);
+    //console.log(url);
     const data = await fetch(url, {
       method: "GET",
       headers: {
@@ -350,10 +350,12 @@ export module recordsModule {
         return res.body ? res.json() : {};
       })
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         return data as Object;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        //console.log(err);
+      });
 
     return data;
   };
@@ -411,7 +413,7 @@ export module recordsModule {
       //err
     }
 
-    console.log(url);
+    //console.log(url);
 
     const data = await fetch(url, {
       method: "GET",
@@ -421,11 +423,11 @@ export module recordsModule {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         return data as Object;
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         return err;
       });
     return data;
@@ -481,7 +483,7 @@ export module recordsModule {
       //err
     }
 
-    console.log(url);
+    //console.log(url);
 
     const data = await fetch(url, {
       method: "GET",
@@ -491,11 +493,11 @@ export module recordsModule {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         return data as Object;
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         return err;
       });
     return data;
