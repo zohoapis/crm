@@ -1,8 +1,18 @@
+import { auth } from "@zohoapis/auth";
 import { describe, it, expect } from "vitest";
 import { records } from "~/index";
+import dotenv from "dotenv";
+dotenv.config();
 
 records.authToken =
-  "1000.b46d402e223aeb11930b3ae7faabe0d1.a63a26af1a84b27c2be522d9c00c99fe";
+  "1000.5f29dc92b010538f83c894c16baca74e.74ef25dea62de768be137ebe06e1f03d";
+
+console.log(process.env.ZOHOAPIS_AUTH_CLIENTID);
+records.auth = new auth({
+  clientId: process.env.ZOHOAPIS_AUTH_CLIENTID as string,
+  clientSecret: process.env.ZOHOAPIS_AUTH_CLIENTSECRET as string,
+  refreshToken: process.env.ZOHOAPIS_AUTH_REFRESHTOKEN as string,
+});
 
 describe("records", () => {
   records.version = "v2";
@@ -17,6 +27,13 @@ describe("records", () => {
       "object"
     );
   });
+
+  // it("getRecord", async () => {
+  //   console.log(`records.getRecord("Accounts", { fields: "Currency", })`);
+  //   expect(await records.getRecords("Accounts", { fields: "id" })).toBeTypeOf(
+  //     "object"
+  //   );
+  // });
 
   // it("getRecord by Id", async () => {
   //   console.log(

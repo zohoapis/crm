@@ -40,7 +40,7 @@ export module recordsModule {
    * @param {string} recordId - Record Id
    * @param {GetParams} params - Query Parameters
    */
-  export async function getRecords(module: string): Promise<Object>;
+  //export async function getRecords(module: string): Promise<Object>;
   export async function getRecords(
     module: string,
     recordId: string
@@ -56,7 +56,7 @@ export module recordsModule {
   ): Promise<Object>;
   export async function getRecords(
     module: string,
-    b?: string | GetParams,
+    b: string | GetParams,
     c?: GetParams
   ): Promise<Object> {
     let recordId: string | undefined = undefined;
@@ -89,10 +89,19 @@ export module recordsModule {
     const data = await fetch(url, {
       method: "GET",
       headers: {
-        Authorization: "Zoho-oauthtoken " + authToken,
+        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
       },
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (res.status === 401) {
+          await auth.refresh();
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          return getRecords(module, b, c);
+        } else {
+          return res.json();
+        }
+      })
       .then((data) => {
         //console.log(data);
         return data as Object;
@@ -140,11 +149,20 @@ export module recordsModule {
     const data = await fetch(url, {
       method: "POST",
       headers: {
-        Authorization: "Zoho-oauthtoken " + authToken,
+        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
       },
       body: JSON.stringify({ data: newRecords }),
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (res.status === 401) {
+          await auth.refresh();
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          return insertRecords(module, b);
+        } else {
+          return res.json();
+        }
+      })
       .then((data) => {
         //console.log(data);
         return data as Object;
@@ -197,11 +215,20 @@ export module recordsModule {
     const data = await fetch(url, {
       method: "PUT",
       headers: {
-        Authorization: "Zoho-oauthtoken " + authToken,
+        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
       },
       body: JSON.stringify({ data: updateRecords }),
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (res.status === 401) {
+          await auth.refresh();
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          return updateRecords(module, b, c);
+        } else {
+          return res.json();
+        }
+      })
       .then((data) => {
         //console.log(data);
         return data as Object;
@@ -249,11 +276,20 @@ export module recordsModule {
     const data = await fetch(url, {
       method: "POST",
       headers: {
-        Authorization: "Zoho-oauthtoken " + authToken,
+        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
       },
       body: JSON.stringify({ data: newRecords }),
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (res.status === 401) {
+          await auth.refresh();
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          return upsertRecords(module, b);
+        } else {
+          return res.json();
+        }
+      })
       .then((data) => {
         //console.log(data);
         return data as Object;
@@ -303,10 +339,19 @@ export module recordsModule {
     const data = await fetch(url, {
       method: "DELETE",
       headers: {
-        Authorization: "Zoho-oauthtoken " + authToken,
+        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
       },
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (res.status === 401) {
+          await auth.refresh();
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          return deleteRecords(module, recordId);
+        } else {
+          return res.json();
+        }
+      })
       .then((data) => {
         //console.log(data);
         return data as Object;
@@ -343,11 +388,18 @@ export module recordsModule {
     const data = await fetch(url, {
       method: "GET",
       headers: {
-        Authorization: "Zoho-oauthtoken " + authToken,
+        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
       },
     })
-      .then((res) => {
-        return res.body ? res.json() : {};
+      .then(async (res) => {
+        if (res.status === 401) {
+          await auth.refresh();
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          return deleteRecords(module, params);
+        } else {
+          return res.body ? res.json() : {};
+        }
       })
       .then((data) => {
         //console.log(data);
@@ -419,7 +471,7 @@ export module recordsModule {
     const data = await fetch(url, {
       method: "GET",
       headers: {
-        Authorization: "Zoho-oauthtoken " + authToken,
+        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
       },
     })
       .then((res) => res.json())
@@ -489,7 +541,7 @@ export module recordsModule {
     const data = await fetch(url, {
       method: "GET",
       headers: {
-        Authorization: "Zoho-oauthtoken " + authToken,
+        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
       },
     })
       .then((res) => res.json())

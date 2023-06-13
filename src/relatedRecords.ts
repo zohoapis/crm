@@ -46,14 +46,21 @@ export module relatedRecordsModule {
     const data = await fetch(url, {
       method: "GET",
       headers: {
-        Authorization: "Zoho-oauthtoken " + authToken,
+        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
       },
     })
-      .then((res) => {
-        if (res.status == 204) {
-          return [];
+      .then(async (res) => {
+        if (res.status === 401) {
+          await auth.refresh();
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          return getRelatedRecords(module, recordId, relatedListName, params);
+        } else {
+          if (res.status == 204) {
+            return [];
+          }
+          return res.json();
         }
-        return res.json();
       })
       .then((data) => {
         //console.log(data);
@@ -111,11 +118,20 @@ export module relatedRecordsModule {
     const data = await fetch(url, {
       method: "PUT",
       headers: {
-        Authorization: "Zoho-oauthtoken " + authToken,
+        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
       },
       body: JSON.stringify({ data: newRecords }),
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (res.status === 401) {
+          await auth.refresh();
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          return linkRelatedRecords(module, recordId, relatedListName, params);
+        } else {
+          return res.json();
+        }
+      })
       .then((data) => {
         console.log(data);
         return data as Object;
@@ -154,25 +170,34 @@ export module relatedRecordsModule {
     module: string,
     recordId: string,
     relatedListName: string,
-    relatedRecordId: string | string[]
+    b: string | string[]
   ): Promise<Object> {
     let url = `${baseUrl}/${module}/${recordId}/${relatedListName}`;
 
-    if (Array.isArray(relatedRecordId)) {
-      const qs = `?ids=${relatedRecordId.map((id) => id).join(",")}`;
+    if (Array.isArray(b)) {
+      const qs = `?ids=${b.map((id) => id).join(",")}`;
       url = url + qs;
     } else {
-      url = url + `/${relatedRecordId}`;
+      url = url + `/${b}`;
     }
 
     console.log("url:", url);
     const data = await fetch(url, {
       method: "DELETE",
       headers: {
-        Authorization: "Zoho-oauthtoken " + authToken,
+        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
       },
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (res.status === 401) {
+          await auth.refresh();
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          return delinkRelatedRecords(module, recordId, relatedListName, b);
+        } else {
+          return res.json();
+        }
+      })
       .then((data) => {
         console.log(data);
         return data as Object;
