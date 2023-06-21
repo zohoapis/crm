@@ -413,10 +413,22 @@ export module recordsModule {
     return data;
   };
 
-  //Search
+  /**
+   * Search Records
+   *
+   * @description Get's a list of deleted records from a module
+   * https://www.zoho.com/crm/developer/docs/api/v4/search-records.html
+   *
+   * The supported criteria operators are equals, starts_with, in, not_equal, greater_equal, greater_than, less_equal, less_than and between.
+   *
+   * @param {string} module - Module Name
+   * @param {string[]} params - Criteria to search on ["(fieldApiName:equals/starts_with:value)"]
+   * @param {string} operator - Join operator: and/or
+   */
   export async function searchRecords(
     module: string,
-    criteria: string[]
+    criteria: string[],
+    operator: string
   ): Promise<Object>;
   export async function searchRecords(
     module: string,
@@ -432,7 +444,8 @@ export module recordsModule {
   ): Promise<Object>;
   export async function searchRecords(
     module: string,
-    a: string | string[]
+    a: string | string[],
+    operator?: string
   ): Promise<Object> {
     let url = `${baseUrl}/${module}/search`;
 
@@ -458,7 +471,7 @@ export module recordsModule {
     } else if (Array.isArray(a)) {
       const qs = `?criteria=(${a
         .map((criteria) => encodeURIComponent(criteria as string))
-        .join("and")})`;
+        .join(operator)})`;
       url = url + qs;
 
       //url = url + "?criteria=(" + a + ")";
