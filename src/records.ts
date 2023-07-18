@@ -24,7 +24,7 @@ import fetch from "node-fetch";
 
 export module recordsModule {
   export let authToken: string;
-  export let apiDomain: string = "https://www.zohoapis.com";
+  export let apiDomain: string = "https://www.zohoapis.com"; ``
   export let version: string = "v4";
 
   const baseUrl = () => {
