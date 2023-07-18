@@ -49,16 +49,17 @@
     "test:ui": "vitest watch --ui",
     "test:watch": "vitest watch"
   },
-  "dependencies": {
-    "node-fetch": "^3.3.1"
-  },
   "devDependencies": {
     "@types/node": "^20.2.3",
+    "@types/node-fetch": "^2.6.4",
     "@vitest/ui": "^0.31.1",
     "c8": "^7.13.0",
     "minifaker": "^1.34.1",
     "tsup": "^6.7.0",
     "typescript": "^5.0.4",
     "vitest": "^0.31.1"
+  },
+  "dependencies": {
+    "node-fetch": "2.6.7"
   }
 }

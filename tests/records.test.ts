@@ -3,7 +3,6 @@ import { records } from "~/index";
 
 records.authToken =
   "10033322137.45d30b0271c8a91b0ea397523e8ebb18.ac6d2afaa86ad126531f9e90a9527766";
-records.apiDomain = "https://afbcrm.zohoplatform.com";
 
 describe("records", () => {
   //records.version = "v2";
