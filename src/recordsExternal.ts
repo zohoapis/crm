@@ -24,10 +24,12 @@ import fetch from "node-fetch";
 
 export module recordsExternalModule {
   export let authToken: string;
-  const apiDomain = "https://www.zohoapis.com";
+  export let apiDomain = "https://www.zohoapis.com";
   export let version: string = "v4";
 
-  const baseUrl = `${apiDomain}/crm/${version}`;
+  const baseUrl = () => {
+    return `${apiDomain}/crm/${version}`
+  }
 
   /**
    * Get Record(s)
@@ -77,7 +79,7 @@ export module recordsExternalModule {
       recordIds = a;
     }
 
-    let url = `${baseUrl}/${module}${recordId ? `/${recordId}` : ""}`;
+    let url = `${baseUrl()}/${module}${recordId ? `/${recordId}` : ""}`;
 
     console.log("authToken:", authToken);
     console.log("recordId:", recordId);
@@ -147,7 +149,7 @@ export module recordsExternalModule {
       newRecords = [b];
     }
 
-    let url = `${baseUrl}/${module}`;
+    let url = `${baseUrl()}/${module}`;
 
     console.log("url:", url);
     const data = await fetch(url, {
@@ -204,7 +206,7 @@ export module recordsExternalModule {
       updateRecords = [b];
     }
 
-    let url = `${baseUrl}/${module}/${recordId}`;
+    let url = `${baseUrl()}/${module}/${recordId}`;
 
     console.log("url:", url);
     const data = await fetch(url, {
@@ -256,7 +258,7 @@ export module recordsExternalModule {
       newRecords = [b];
     }
 
-    let url = `${baseUrl}/${module}/upsert`;
+    let url = `${baseUrl()}/${module}/upsert`;
 
     console.log("url:", url);
     const data = await fetch(url, {
@@ -301,7 +303,7 @@ export module recordsExternalModule {
     module: string,
     recordId: string | string[]
   ): Promise<Object> {
-    let url = `${baseUrl}/${module}`;
+    let url = `${baseUrl()}/${module}`;
 
     if (Array.isArray(recordId)) {
       const qs = `?ids=${recordId
@@ -342,7 +344,7 @@ export module recordsExternalModule {
    * @param {ListDeletedParams} params - Query Parameters
    */
   export const getDeleted = async (module: string, params?: BasicParams) => {
-    let url = `${baseUrl}/${module}/deleted`;
+    let url = `${baseUrl()}/${module}/deleted`;
     if (params) {
       const qs =
         "?" +
@@ -392,7 +394,7 @@ export module recordsExternalModule {
     module: String,
     a: String | String[]
   ): Promise<Object> {
-    let url = `${baseUrl}/${module}/search`;
+    let url = `${baseUrl()}/${module}/search`;
 
     //email   /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
     //phone   /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/g
@@ -465,7 +467,7 @@ export module recordsExternalModule {
     module: String,
     a: String | String[]
   ): Promise<Object> {
-    let url = `${baseUrl}/${module}/actions/count`;
+    let url = `${baseUrl()}/${module}/actions/count`;
 
     if (typeof a === "string") {
       if (

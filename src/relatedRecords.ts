@@ -9,11 +9,12 @@ import fetch from "node-fetch";
 
 export module relatedRecordsModule {
   export let authToken: string;
-  export let auth: any;
-  const apiDomain = "https://www.zohoapis.com";
+  export let apiDomain = "https://www.zohoapis.com";
   export let version: string = "v4";
 
-  const baseUrl = `${apiDomain}/crm/${version}`;
+  const baseUrl = () => {
+    return `${apiDomain}/crm/${version}`
+  }
 
   /**
    * Get Related Record(s)
@@ -31,7 +32,7 @@ export module relatedRecordsModule {
     relatedListName: string,
     params: BasicFieldParams
   ): Promise<Object> {
-    let url = `${baseUrl}/${module}/${recordId}/${relatedListName}`;
+    let url = `${baseUrl()}/${module}/${recordId}/${relatedListName}`;
 
     // console.log("recordId:", recordId);
     // console.log("params:", params);
@@ -46,21 +47,14 @@ export module relatedRecordsModule {
     const data = await fetch(url, {
       method: "GET",
       headers: {
-        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
+        Authorization: "Zoho-oauthtoken " + authToken,
       },
     })
       .then(async (res) => {
-        if (res.status === 401) {
-          await auth.refresh();
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return getRelatedRecords(module, recordId, relatedListName, params);
-        } else {
-          if (res.status == 204) {
-            return [];
-          }
-          return res.json();
+        if (res.status == 204) {
+          return [];
         }
+        return res.json();
       })
       .then((data) => {
         //console.log(data);
@@ -110,7 +104,7 @@ export module relatedRecordsModule {
       newRecords = [record];
     }
 
-    let url = `${baseUrl}/${module}/${recordId}/${relatedListName}`;
+    let url = `${baseUrl()}/${module}/${recordId}/${relatedListName}`;
 
     console.log("recordId:", recordId);
     console.log("url:", url);
@@ -118,19 +112,12 @@ export module relatedRecordsModule {
     const data = await fetch(url, {
       method: "PUT",
       headers: {
-        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
+        Authorization: "Zoho-oauthtoken " + authToken,
       },
       body: JSON.stringify({ data: newRecords }),
     })
       .then(async (res) => {
-        if (res.status === 401) {
-          await auth.refresh();
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return linkRelatedRecords(module, recordId, relatedListName, params);
-        } else {
-          return res.json();
-        }
+        return res.json();
       })
       .then((data) => {
         console.log(data);
@@ -172,7 +159,7 @@ export module relatedRecordsModule {
     relatedListName: string,
     b: string | string[]
   ): Promise<Object> {
-    let url = `${baseUrl}/${module}/${recordId}/${relatedListName}`;
+    let url = `${baseUrl()}/${module}/${recordId}/${relatedListName}`;
 
     if (Array.isArray(b)) {
       const qs = `?ids=${b.map((id) => id).join(",")}`;
@@ -185,18 +172,11 @@ export module relatedRecordsModule {
     const data = await fetch(url, {
       method: "DELETE",
       headers: {
-        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
+        Authorization: "Zoho-oauthtoken " + authToken,
       },
     })
       .then(async (res) => {
-        if (res.status === 401) {
-          await auth.refresh();
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return delinkRelatedRecords(module, recordId, relatedListName, b);
-        } else {
-          return res.json();
-        }
+        return res.json();
       })
       .then((data) => {
         console.log(data);

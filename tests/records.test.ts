@@ -1,28 +1,20 @@
-import { auth } from "@zohoapis/auth";
 import { describe, it, expect } from "vitest";
 import { records } from "~/index";
-import dotenv from "dotenv";
-dotenv.config();
 
 records.authToken =
-  "1000.5f29dc92b010538f83c894c16baca74e.74ef25dea62de768be137ebe06e1f03d";
-
-console.log(process.env.ZOHOAPIS_AUTH_CLIENTID);
-records.auth = new auth({
-  clientId: process.env.ZOHOAPIS_AUTH_CLIENTID as string,
-  clientSecret: process.env.ZOHOAPIS_AUTH_CLIENTSECRET as string,
-  refreshToken: process.env.ZOHOAPIS_AUTH_REFRESHTOKEN as string,
-});
+  "10033322137.45d30b0271c8a91b0ea397523e8ebb18.ac6d2afaa86ad126531f9e90a9527766";
+records.apiDomain = "https://afbcrm.zohoplatform.com";
 
 describe("records", () => {
-  records.version = "v2";
+  //records.version = "v2";
   it("temp override", () => {
     expect("").toBeTypeOf("string");
   });
-  // it("getRecord", async () => {
-  //   console.log(`records.getRecord("Accounts")`);
-  //   expect(await records.getRecord("Accounts")).toBeTypeOf("object");
-  // });
+  it("getRecord", async () => {
+    const call = await records.getRecords("Accounts", { fields: "id" });
+    console.log(call)
+    expect(call).toBeTypeOf("object");
+  });
 
   // it("getRecord", async () => {
   //   console.log(`records.getRecord("Accounts", { fields: "Currency", })`);

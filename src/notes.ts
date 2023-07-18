@@ -38,10 +38,12 @@ import fetch from "node-fetch";
 
 export module notesModule {
   export let authToken: string;
-  const apiDomain = "https://www.zohoapis.com";
+  export let apiDomain = "https://www.zohoapis.com";
   export let version: string = "v4";
 
-  const baseUrl = `${apiDomain}/crm/${version}`;
+  const baseUrl = () => {
+    return `${apiDomain}/crm/${version}`
+  }
 
   /**
    * Get Notes
@@ -68,7 +70,7 @@ export module notesModule {
     b?: string | BasicParams,
     c?: BasicParams
   ): Promise<Object> {
-    let url = `${baseUrl}`;
+    let url = `${baseUrl()}`;
     let params: BasicParams;
 
     if (c) {
@@ -137,7 +139,7 @@ export module notesModule {
     b?: string,
     c?: RecordNoteCreation[]
   ): Promise<Object> {
-    let url = `${baseUrl}`;
+    let url = `${baseUrl()}`;
     let notes: NoteCreation[] | RecordNoteCreation[];
 
     if (typeof a === "string") {
@@ -203,7 +205,7 @@ export module notesModule {
     b?: string | RecordNoteUpdate,
     c?: RecordNoteUpdate[] | RecordNotesUpdate[]
   ): Promise<Object> {
-    let url = `${baseUrl}`;
+    let url = `${baseUrl()}`;
     let notes: RecordNoteUpdate[] | RecordNotesUpdate[];
 
     if (c) {
@@ -259,7 +261,7 @@ export module notesModule {
     b?: string,
     c?: string
   ): Promise<Object> {
-    let url = `${baseUrl}`;
+    let url = `${baseUrl()}`;
 
     if (b) {
       url += `/${a}/${b}/Notes/${c}`;

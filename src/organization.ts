@@ -2,10 +2,12 @@ import fetch from "node-fetch";
 
 export module organizationModule {
   export let authToken: string;
-  const apiDomain = "https://www.zohoapis.com";
+  export let apiDomain = "https://www.zohoapis.com";
   export let version: string = "v4";
 
-  const baseUrl = `${apiDomain}/crm/${version}`;
+  const baseUrl = () => {
+    return `${apiDomain}/crm/${version}`
+  }
 
   /**
    * Get Organization Information
@@ -15,7 +17,7 @@ export module organizationModule {
    *
    */
   export async function getOrganizationDetails(): Promise<Object> {
-    let url = `${baseUrl}/org`;
+    let url = `${baseUrl()}/org`;
 
     console.log("url:", url);
     const data = await fetch(url, {
@@ -46,7 +48,7 @@ export module organizationModule {
    * @param {file} file - Module Name
    */
   export async function linkRelatedRecords(): Promise<Object> {
-    let url = `${baseUrl}/org/photo`;
+    let url = `${baseUrl()}/org/photo`;
 
     console.log("url:", url);
     const data = await fetch(url, {

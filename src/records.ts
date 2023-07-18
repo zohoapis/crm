@@ -24,11 +24,12 @@ import fetch from "node-fetch";
 
 export module recordsModule {
   export let authToken: string;
-  export let auth: any;
-  export let apiDomain = "https://www.zohoapis.com";
+  export let apiDomain: string = "https://www.zohoapis.com";
   export let version: string = "v4";
 
-  const baseUrl = `${apiDomain}/crm/${version}`;
+  const baseUrl = () => {
+    return `${apiDomain}/crm/${version}`
+  }
 
   /**
    * Get Record(s)
@@ -71,7 +72,7 @@ export module recordsModule {
       params = b as GetParams;
     }
 
-    let url = `${baseUrl}/${module}${recordId ? `/${recordId}` : ""}`;
+    let url = `${baseUrl()}/${module}${recordId ? `/${recordId}` : ""}`;
 
     //console.log("authToken:", authToken);
     //console.log("recordId:", recordId);
@@ -84,23 +85,17 @@ export module recordsModule {
           .join("&");
       url = url + qs;
     }
-
-    //console.log("url:", url);
+    console.log(authToken)
+    console.log(apiDomain)
+    console.log("url:", url);
     const data = await fetch(url, {
       method: "GET",
       headers: {
-        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
+        Authorization: "Zoho-oauthtoken " + authToken,
       },
     })
       .then(async (res) => {
-        if (res.status === 401) {
-          await auth.refresh();
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return getRecords(module, b, c);
-        } else {
-          return res.json();
-        }
+        return res.json();
       })
       .then((data) => {
         //console.log(data);
@@ -143,25 +138,18 @@ export module recordsModule {
       newRecords = [b];
     }
 
-    let url = `${baseUrl}/${module}`;
+    let url = `${baseUrl()}/${module}`;
 
     //console.log("url:", url);
     const data = await fetch(url, {
       method: "POST",
       headers: {
-        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
+        Authorization: "Zoho-oauthtoken " + authToken,
       },
       body: JSON.stringify({ data: newRecords }),
     })
       .then(async (res) => {
-        if (res.status === 401) {
-          await auth.refresh();
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return insertRecords(module, b);
-        } else {
-          return res.json();
-        }
+        return res.json();
       })
       .then((data) => {
         //console.log(data);
@@ -209,25 +197,18 @@ export module recordsModule {
       updateRecords = [b];
     }
 
-    let url = `${baseUrl}/${module}/${recordId}`;
+    let url = `${baseUrl()}/${module}/${recordId}`;
 
     //console.log("url:", url);
     const data = await fetch(url, {
       method: "PUT",
       headers: {
-        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
+        Authorization: "Zoho-oauthtoken " + authToken,
       },
       body: JSON.stringify({ data: updateRecords }),
     })
       .then(async (res) => {
-        if (res.status === 401) {
-          await auth.refresh();
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return updateRecords(module, b, c);
-        } else {
-          return res.json();
-        }
+        return res.json();
       })
       .then((data) => {
         //console.log(data);
@@ -270,25 +251,18 @@ export module recordsModule {
       newRecords = [b];
     }
 
-    let url = `${baseUrl}/${module}/upsert`;
+    let url = `${baseUrl()}/${module}/upsert`;
 
     //console.log("url:", url);
     const data = await fetch(url, {
       method: "POST",
       headers: {
-        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
+        Authorization: "Zoho-oauthtoken " + authToken,
       },
       body: JSON.stringify({ data: newRecords }),
     })
       .then(async (res) => {
-        if (res.status === 401) {
-          await auth.refresh();
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return upsertRecords(module, b);
-        } else {
-          return res.json();
-        }
+        return res.json();
       })
       .then((data) => {
         //console.log(data);
@@ -324,7 +298,7 @@ export module recordsModule {
     module: string,
     recordId: string | string[]
   ): Promise<Object> {
-    let url = `${baseUrl}/${module}`;
+    let url = `${baseUrl()}/${module}`;
 
     if (Array.isArray(recordId)) {
       const qs = `?ids=${recordId
@@ -339,18 +313,11 @@ export module recordsModule {
     const data = await fetch(url, {
       method: "DELETE",
       headers: {
-        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
+        Authorization: "Zoho-oauthtoken " + authToken,
       },
     })
       .then(async (res) => {
-        if (res.status === 401) {
-          await auth.refresh();
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return deleteRecords(module, recordId);
-        } else {
-          return res.json();
-        }
+        return res.json();
       })
       .then((data) => {
         //console.log(data);
@@ -374,7 +341,7 @@ export module recordsModule {
    * @param {ListDeletedParams} params - Query Parameters
    */
   export const getDeleted = async (module: string, params?: BasicParams) => {
-    let url = `${baseUrl}/${module}/deleted`;
+    let url = `${baseUrl()}/${module}/deleted`;
     if (params) {
       const qs =
         "?" +
@@ -388,18 +355,11 @@ export module recordsModule {
     const data = await fetch(url, {
       method: "GET",
       headers: {
-        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
+        Authorization: "Zoho-oauthtoken " + authToken,
       },
     })
       .then(async (res) => {
-        if (res.status === 401) {
-          await auth.refresh();
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return deleteRecords(module, params);
-        } else {
-          return res.body ? res.json() : {};
-        }
+        return res.body ? res.json() : {};
       })
       .then((data) => {
         //console.log(data);
@@ -447,7 +407,7 @@ export module recordsModule {
     a: string | string[],
     operator?: string
   ): Promise<Object> {
-    let url = `${baseUrl}/${module}/search`;
+    let url = `${baseUrl()}/${module}/search`;
 
     //email   /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
     //phone   /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/g
@@ -484,7 +444,7 @@ export module recordsModule {
     const data = await fetch(url, {
       method: "GET",
       headers: {
-        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
+        Authorization: "Zoho-oauthtoken " + authToken,
       },
     })
       .then((res) => res.json())
@@ -520,7 +480,7 @@ export module recordsModule {
     module: string,
     a: string | string[]
   ): Promise<Object> {
-    let url = `${baseUrl}/${module}/actions/count`;
+    let url = `${baseUrl()}/${module}/actions/count`;
 
     if (typeof a === "string") {
       if (
@@ -554,7 +514,7 @@ export module recordsModule {
     const data = await fetch(url, {
       method: "GET",
       headers: {
-        Authorization: "Zoho-oauthtoken " + (auth ? auth.authToken : authToken),
+        Authorization: "Zoho-oauthtoken " + authToken,
       },
     })
       .then((res) => res.json())
